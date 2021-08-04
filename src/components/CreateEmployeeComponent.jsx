@@ -47,8 +47,11 @@ class CreateEmployeeComponent extends Component {
     }
     saveOrUpdateEmployee = async (event) => {
         event.preventDefault();
-        const { firstName, lastName, emailId } = this.state;
-        let employee = { firstName, lastName, emailId };
+        let employee = {};
+        const sectionsArr = employeeDataset.map(each => each.value);
+        sectionsArr.forEach(section => {
+            employee[section] = this.state[section]
+        })
 
         // step 5
         if (this.state.id === '_add') {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { getEmployeeById, updateEmployee } from '../services/EmployeeService';
+import { employeeDataset } from '../utils/dataSet';
 
 class UpdateEmployeeComponent extends Component {
     constructor(props) {
@@ -40,16 +41,11 @@ class UpdateEmployeeComponent extends Component {
 
     updateEmployee = async (event) => {
         event.preventDefault();
-        const { firstName, lastName, emailId, address, managerName, department, phoneNumber } = this.state;
-        let employee = {
-            firstName,
-            lastName,
-            emailId,
-            address,
-            managerName,
-            department,
-            phoneNumber
-        };
+        let employee = {};
+        const sectionsArr = employeeDataset.map(each => each.value);
+        sectionsArr.forEach(section => {
+            employee[section] = this.state[section]
+        });
         try {
             const res = await updateEmployee(employee, this.state.id);
             console.log('updateEmployee', res);
